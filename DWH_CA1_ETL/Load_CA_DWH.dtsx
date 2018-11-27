@@ -12,8 +12,8 @@
   DTS:LocaleID="6153"
   DTS:ObjectName="Load_CA_DWH"
   DTS:PackageType="5"
-  DTS:VersionBuild="85"
-  DTS:VersionGUID="{CF362FDA-CE5B-4DF0-B432-65FA29B5973B}">
+  DTS:VersionBuild="87"
+  DTS:VersionGUID="{D7A8DBB1-24C1-427E-921F-B4E372EC2A56}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -3714,538 +3714,6 @@ from cte</property>
                       </outputs>
                     </component>
                     <component
-                      refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup"
-                      componentClassID="Microsoft.FuzzyLookup"
-                      contactInfo="Fuzzy Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;5"
-                      description="Performs data cleaning tasks such as standardizing data, correcting data, and providing missing values.  Uses fuzzy matching to return one or more close matches from a reference table. For example, lookup customer data by address, even if your input address data does not exactly match your reference address data."
-                      name="Fuzzy Lookup"
-                      version="5">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Indicates whether to reuse an existing fuzzy-match index table or build a new one. The new index table can be temporary, persisted, or persisted and maintained."
-                          name="MatchIndexOptions"
-                          typeConverter="tcMatchIndexOptions">1</property>
-                        <property
-                          dataType="System.Null"
-                          description="Specifies the maximum amount of memory (MB) that this instance of the Fuzzy Lookup transformation can use.  If 0 is given, then the transform will dynamically adjust it's memory usage based upon it's requirements and available system memory."
-                          expressionType="Notify"
-                          name="MaxMemoryUsage" />
-                        <property
-                          dataType="System.Null"
-                          description="Specifies the name of the fuzzy-match index table to be reused or the table name in which a newly generated fuzzy-match index table will be written."
-                          name="MatchIndexName"
-                          state="escaped" />
-                        <property
-                          dataType="System.String"
-                          description="Specifies the name of the reference table or view against which to match incoming records."
-                          name="ReferenceTableName"
-                          state="escaped">_x005B_Stg_x005D_._x005B_location_lookup_x005D_</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Indicates whether to drop an existing fuzzy-match index table if transformation is configured to generate a new table and a table with the same name already exists."
-                          name="DropExistingMatchIndex">1</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Whether a copy of the reference table should be made for fuzzy match index construction and subsequent matching.  It is strongly recommended that a copy always be made, otherwise unpredictable output may result if the contents of the reference table change during package execution (or between executions if reusing a fuzzy match index).  If this property is set to false, the reference table must additionally have a clustered index built upon an integer identity column."
-                          name="CopyReferenceTable">1</property>
-                        <property
-                          dataType="System.UInt32"
-                          description="Specifies the maximum number of fuzzy matches to return for an input record."
-                          name="MaxOutputMatchesPerInput">1</property>
-                        <property
-                          dataType="System.Single"
-                          description="Specifies the minimum similarity score required for the match results that the transformation returns."
-                          name="MinSimilarity">0.2</property>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the set of white-space and punctuation characters used to separate fuzzy match fields into the words used for matching and scoring a fuzzy lookup."
-                          name="Delimiters"
-                          state="escaped">_x0020__x0009__x000D__x000A__x002C_._x003B_:-_x0022__x0027__x0026__x002F__x005C__x0040__x0021__x003F__x0028__x0029__x003C__x003E__x005B__x005D__x007B__x007D__x007C__x0023__x002A__x005E__x0025_</property>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the metadata of the reference table in XML format."
-                          name="ReferenceMetadataXml"
-                          state="escaped">_x003C_referenceMetadata_x003E__x003C_referenceColumns_x003E__x003C_referenceColumn_x0020_name_x003D__x0022_county_x0022__x0020_dataType_x003D__x0022_DT_STR_x0022__x0020_length_x003D__x0022_50_x0022__x0020_precision_x003D__x0022_0_x0022__x0020_scale_x003D__x0022_0_x0022__x0020_codePage_x003D__x0022_1252_x0022__x002F__x003E__x003C_referenceColumn_x0020_name_x003D__x0022_country_x0022__x0020_dataType_x003D__x0022_DT_STR_x0022__x0020_length_x003D__x0022_50_x0022__x0020_precision_x003D__x0022_0_x0022__x0020_scale_x003D__x0022_0_x0022__x0020_codePage_x003D__x0022_1252_x0022__x002F__x003E__x003C_referenceColumn_x0020_name_x003D__x0022_location_x0022__x0020_dataType_x003D__x0022_DT_STR_x0022__x0020_length_x003D__x0022_152_x0022__x0020_precision_x003D__x0022_0_x0022__x0020_scale_x003D__x0022_0_x0022__x0020_codePage_x003D__x0022_1252_x0022__x002F__x003E__x003C__x002F_referenceColumns_x003E__x003C__x002F_referenceMetadata_x003E__x000D__x000A_</property>
-                        <property
-                          dataType="System.Boolean"
-                          description="If true, each input record will be directly compared against EVERY record in the reference table.  This may produce slightly better results, but will be extremely slow unless the number of records in the reference table is very small.  Note that the entire reference table will be loaded into main memory if this option is enabled.  This option is primarily intended for debugging purposes and should be used with care."
-                          name="Exhaustive">false</property>
-                        <property
-                          dataType="System.Boolean"
-                          description="If true, Fuzzy Lookup will partially load the error-tolerant index and the reference table into main memory before execution begins.  This can greatly enhance performance if many input rows are to be processed."
-                          name="WarmCaches">true</property>
-                      </properties>
-                      <connections>
-                        <connection
-                          refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Connections[OleDbConnection]"
-                          connectionManagerID="{50CD106A-83C4-4CC6-A7DF-CEB6E8C94877}:external"
-                          connectionManagerRefId="Project.ConnectionManagers[DWH_CA1]"
-                          description="Microsoft SQL Server connection and database in which the fuzzy lookup reference table is located and where the fuzzy match index table will be stored and accessed."
-                          name="OleDbConnection" />
-                      </connections>
-                      <inputs>
-                        <input
-                          refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Inputs[Fuzzy Lookup Input]"
-                          name="Fuzzy Lookup Input">
-                          <inputColumns>
-                            <inputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Inputs[Fuzzy Lookup Input].Columns[tweet_id]"
-                              cachedDataType="i8"
-                              cachedName="tweet_id"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_id]">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Name of the reference table column with which the input column should be matched."
-                                  name="JoinToReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the match is a fuzzy or an exact match."
-                                  name="JoinType"
-                                  typeConverter="tcJoinType">2</property>
-                                <property
-                                  dataType="System.Single"
-                                  description="Specifies the minimum textual similarity required between input and fuzzy matched records on values in this particular join column.  Must be a floating point value between 0.0 and 1.0."
-                                  name="MinSimilarity">0</property>
-                                <property
-                                  dataType="System.UInt32"
-                                  description="Specifies the comparison options for character data. The options are those supported by the FoldString function."
-                                  name="FuzzyComparisonFlags"
-                                  typeConverter="tcComparisonFlags">1</property>
-                                <property
-                                  dataType="System.UInt32"
-                                  description="Flags to FoldString that should be used when comparing whether two strings are equivalent."
-                                  name="FuzzyComparisonFlagsEx"
-                                  typeConverter="tcComparisonFlagsEx">0</property>
-                              </properties>
-                            </inputColumn>
-                            <inputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Inputs[Fuzzy Lookup Input].Columns[tweet_idstr]"
-                              cachedCodepage="1252"
-                              cachedDataType="str"
-                              cachedLength="50"
-                              cachedName="tweet_idstr"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_idstr]">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Name of the reference table column with which the input column should be matched."
-                                  name="JoinToReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the match is a fuzzy or an exact match."
-                                  name="JoinType"
-                                  typeConverter="tcJoinType">2</property>
-                                <property
-                                  dataType="System.Single"
-                                  description="Specifies the minimum textual similarity required between input and fuzzy matched records on values in this particular join column.  Must be a floating point value between 0.0 and 1.0."
-                                  name="MinSimilarity">0</property>
-                                <property
-                                  dataType="System.UInt32"
-                                  description="Specifies the comparison options for character data. The options are those supported by the FoldString function."
-                                  name="FuzzyComparisonFlags"
-                                  typeConverter="tcComparisonFlags">1</property>
-                                <property
-                                  dataType="System.UInt32"
-                                  description="Flags to FoldString that should be used when comparing whether two strings are equivalent."
-                                  name="FuzzyComparisonFlagsEx"
-                                  typeConverter="tcComparisonFlagsEx">0</property>
-                              </properties>
-                            </inputColumn>
-                            <inputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Inputs[Fuzzy Lookup Input].Columns[tweet_text]"
-                              cachedCodepage="1252"
-                              cachedDataType="str"
-                              cachedLength="280"
-                              cachedName="tweet_text"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_text]">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Name of the reference table column with which the input column should be matched."
-                                  name="JoinToReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the match is a fuzzy or an exact match."
-                                  name="JoinType"
-                                  typeConverter="tcJoinType">2</property>
-                                <property
-                                  dataType="System.Single"
-                                  description="Specifies the minimum textual similarity required between input and fuzzy matched records on values in this particular join column.  Must be a floating point value between 0.0 and 1.0."
-                                  name="MinSimilarity">0</property>
-                                <property
-                                  dataType="System.UInt32"
-                                  description="Specifies the comparison options for character data. The options are those supported by the FoldString function."
-                                  name="FuzzyComparisonFlags"
-                                  typeConverter="tcComparisonFlags">1</property>
-                                <property
-                                  dataType="System.UInt32"
-                                  description="Flags to FoldString that should be used when comparing whether two strings are equivalent."
-                                  name="FuzzyComparisonFlagsEx"
-                                  typeConverter="tcComparisonFlagsEx">0</property>
-                              </properties>
-                            </inputColumn>
-                            <inputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Inputs[Fuzzy Lookup Input].Columns[created_datetime]"
-                              cachedDataType="dbTimeStamp"
-                              cachedName="created_datetime"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[created_datetime]">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Name of the reference table column with which the input column should be matched."
-                                  name="JoinToReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the match is a fuzzy or an exact match."
-                                  name="JoinType"
-                                  typeConverter="tcJoinType">2</property>
-                                <property
-                                  dataType="System.Single"
-                                  description="Specifies the minimum textual similarity required between input and fuzzy matched records on values in this particular join column.  Must be a floating point value between 0.0 and 1.0."
-                                  name="MinSimilarity">0</property>
-                                <property
-                                  dataType="System.UInt32"
-                                  description="Specifies the comparison options for character data. The options are those supported by the FoldString function."
-                                  name="FuzzyComparisonFlags"
-                                  typeConverter="tcComparisonFlags">1</property>
-                                <property
-                                  dataType="System.UInt32"
-                                  description="Flags to FoldString that should be used when comparing whether two strings are equivalent."
-                                  name="FuzzyComparisonFlagsEx"
-                                  typeConverter="tcComparisonFlagsEx">0</property>
-                              </properties>
-                            </inputColumn>
-                            <inputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Inputs[Fuzzy Lookup Input].Columns[retweet]"
-                              cachedDataType="i4"
-                              cachedName="retweet"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[retweet]">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Name of the reference table column with which the input column should be matched."
-                                  name="JoinToReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the match is a fuzzy or an exact match."
-                                  name="JoinType"
-                                  typeConverter="tcJoinType">2</property>
-                                <property
-                                  dataType="System.Single"
-                                  description="Specifies the minimum textual similarity required between input and fuzzy matched records on values in this particular join column.  Must be a floating point value between 0.0 and 1.0."
-                                  name="MinSimilarity">0</property>
-                                <property
-                                  dataType="System.UInt32"
-                                  description="Specifies the comparison options for character data. The options are those supported by the FoldString function."
-                                  name="FuzzyComparisonFlags"
-                                  typeConverter="tcComparisonFlags">1</property>
-                                <property
-                                  dataType="System.UInt32"
-                                  description="Flags to FoldString that should be used when comparing whether two strings are equivalent."
-                                  name="FuzzyComparisonFlagsEx"
-                                  typeConverter="tcComparisonFlagsEx">0</property>
-                              </properties>
-                            </inputColumn>
-                            <inputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Inputs[Fuzzy Lookup Input].Columns[location]"
-                              cachedCodepage="1252"
-                              cachedDataType="str"
-                              cachedLength="1024"
-                              cachedName="location"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[location]">
-                              <properties>
-                                <property
-                                  dataType="System.String"
-                                  description="Name of the reference table column with which the input column should be matched."
-                                  name="JoinToReferenceColumn"
-                                  state="escaped">location</property>
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the match is a fuzzy or an exact match."
-                                  name="JoinType"
-                                  typeConverter="tcJoinType">2</property>
-                                <property
-                                  dataType="System.Single"
-                                  description="Specifies the minimum textual similarity required between input and fuzzy matched records on values in this particular join column.  Must be a floating point value between 0.0 and 1.0."
-                                  name="MinSimilarity">0</property>
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies the comparison options for character data. The options are those supported by the FoldString function."
-                                  name="FuzzyComparisonFlags"
-                                  typeConverter="tcComparisonFlags">1</property>
-                                <property
-                                  dataType="System.UInt32"
-                                  description="Flags to FoldString that should be used when comparing whether two strings are equivalent."
-                                  name="FuzzyComparisonFlagsEx"
-                                  typeConverter="tcComparisonFlagsEx">0</property>
-                              </properties>
-                            </inputColumn>
-                          </inputColumns>
-                          <externalMetadataColumns />
-                        </input>
-                      </inputs>
-                      <outputs>
-                        <output
-                          refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output]"
-                          name="Fuzzy Lookup Output">
-                          <outputColumns>
-                            <outputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_id]"
-                              dataType="i8"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_id]"
-                              name="tweet_id">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Specifies the reference table column that is copied to the output for each match result."
-                                  name="CopyFromReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  containsID="true"
-                                  dataType="System.Int32"
-                                  description="Specifies the lineage identifier of the input column from which to copy to this output column for each match."
-                                  name="SourceInputColumnLineageID">#{Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_id]}</property>
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the column is used to indicate confidence or similarity."
-                                  name="ColumnType"
-                                  typeConverter="tcColumnType">0</property>
-                              </properties>
-                            </outputColumn>
-                            <outputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_idstr]"
-                              codePage="1252"
-                              dataType="str"
-                              length="50"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_idstr]"
-                              name="tweet_idstr">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Specifies the reference table column that is copied to the output for each match result."
-                                  name="CopyFromReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  containsID="true"
-                                  dataType="System.Int32"
-                                  description="Specifies the lineage identifier of the input column from which to copy to this output column for each match."
-                                  name="SourceInputColumnLineageID">#{Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_idstr]}</property>
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the column is used to indicate confidence or similarity."
-                                  name="ColumnType"
-                                  typeConverter="tcColumnType">0</property>
-                              </properties>
-                            </outputColumn>
-                            <outputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_text]"
-                              codePage="1252"
-                              dataType="str"
-                              length="280"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_text]"
-                              name="tweet_text">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Specifies the reference table column that is copied to the output for each match result."
-                                  name="CopyFromReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  containsID="true"
-                                  dataType="System.Int32"
-                                  description="Specifies the lineage identifier of the input column from which to copy to this output column for each match."
-                                  name="SourceInputColumnLineageID">#{Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_text]}</property>
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the column is used to indicate confidence or similarity."
-                                  name="ColumnType"
-                                  typeConverter="tcColumnType">0</property>
-                              </properties>
-                            </outputColumn>
-                            <outputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[created_datetime]"
-                              dataType="dbTimeStamp"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[created_datetime]"
-                              name="created_datetime">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Specifies the reference table column that is copied to the output for each match result."
-                                  name="CopyFromReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  containsID="true"
-                                  dataType="System.Int32"
-                                  description="Specifies the lineage identifier of the input column from which to copy to this output column for each match."
-                                  name="SourceInputColumnLineageID">#{Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[created_datetime]}</property>
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the column is used to indicate confidence or similarity."
-                                  name="ColumnType"
-                                  typeConverter="tcColumnType">0</property>
-                              </properties>
-                            </outputColumn>
-                            <outputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[retweet]"
-                              dataType="i4"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[retweet]"
-                              name="retweet">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Specifies the reference table column that is copied to the output for each match result."
-                                  name="CopyFromReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  containsID="true"
-                                  dataType="System.Int32"
-                                  description="Specifies the lineage identifier of the input column from which to copy to this output column for each match."
-                                  name="SourceInputColumnLineageID">#{Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[retweet]}</property>
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the column is used to indicate confidence or similarity."
-                                  name="ColumnType"
-                                  typeConverter="tcColumnType">0</property>
-                              </properties>
-                            </outputColumn>
-                            <outputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[location]"
-                              codePage="1252"
-                              dataType="str"
-                              length="1024"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[location]"
-                              name="location">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Specifies the reference table column that is copied to the output for each match result."
-                                  name="CopyFromReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  containsID="true"
-                                  dataType="System.Int32"
-                                  description="Specifies the lineage identifier of the input column from which to copy to this output column for each match."
-                                  name="SourceInputColumnLineageID">#{Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[location]}</property>
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the column is used to indicate confidence or similarity."
-                                  name="ColumnType"
-                                  typeConverter="tcColumnType">0</property>
-                              </properties>
-                            </outputColumn>
-                            <outputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[county]"
-                              codePage="1252"
-                              dataType="str"
-                              length="50"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[county]"
-                              name="county">
-                              <properties>
-                                <property
-                                  dataType="System.String"
-                                  description="Specifies the reference table column that is copied to the output for each match result."
-                                  name="CopyFromReferenceColumn"
-                                  state="escaped">county</property>
-                                <property
-                                  containsID="true"
-                                  dataType="System.Null"
-                                  description="Specifies the lineage identifier of the input column from which to copy to this output column for each match."
-                                  name="SourceInputColumnLineageID" />
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the column is used to indicate confidence or similarity."
-                                  name="ColumnType"
-                                  typeConverter="tcColumnType">0</property>
-                              </properties>
-                            </outputColumn>
-                            <outputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[country]"
-                              codePage="1252"
-                              dataType="str"
-                              length="50"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[country]"
-                              name="country">
-                              <properties>
-                                <property
-                                  dataType="System.String"
-                                  description="Specifies the reference table column that is copied to the output for each match result."
-                                  name="CopyFromReferenceColumn"
-                                  state="escaped">country</property>
-                                <property
-                                  containsID="true"
-                                  dataType="System.Null"
-                                  description="Specifies the lineage identifier of the input column from which to copy to this output column for each match."
-                                  name="SourceInputColumnLineageID" />
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the column is used to indicate confidence or similarity."
-                                  name="ColumnType"
-                                  typeConverter="tcColumnType">0</property>
-                              </properties>
-                            </outputColumn>
-                            <outputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[_Similarity]"
-                              dataType="r4"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[_Similarity]"
-                              name="_Similarity">
-                              <properties>
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the column is used to indicate confidence or similarity."
-                                  name="ColumnType"
-                                  typeConverter="tcColumnType">1</property>
-                              </properties>
-                            </outputColumn>
-                            <outputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[_Confidence]"
-                              dataType="r4"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[_Confidence]"
-                              name="_Confidence">
-                              <properties>
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the column is used to indicate confidence or similarity."
-                                  name="ColumnType"
-                                  typeConverter="tcColumnType">2</property>
-                              </properties>
-                            </outputColumn>
-                            <outputColumn
-                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[_Similarity_location]"
-                              dataType="r4"
-                              description="Column-level similarity score for fuzzy join on column &quot;location&quot;."
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[_Similarity_location]"
-                              name="_Similarity_location">
-                              <properties>
-                                <property
-                                  dataType="System.Null"
-                                  description="Specifies the reference table column that is copied to the output for each match result."
-                                  name="CopyFromReferenceColumn"
-                                  state="escaped" />
-                                <property
-                                  containsID="true"
-                                  dataType="System.Int32"
-                                  description="Specifies the lineage identifier of the input column from which to copy to this output column for each match."
-                                  name="SourceInputColumnLineageID">#{Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[location]}</property>
-                                <property
-                                  dataType="System.Int32"
-                                  description="Specifies whether the column is used to indicate confidence or similarity."
-                                  name="ColumnType"
-                                  typeConverter="tcColumnType">3</property>
-                              </properties>
-                            </outputColumn>
-                          </outputColumns>
-                          <externalMetadataColumns />
-                        </output>
-                      </outputs>
-                    </component>
-                    <component
                       refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\SCD to check that tweet does not already exist"
                       componentClassID="Microsoft.SCD"
                       contactInfo="Slowly Changing Dimension;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
@@ -4312,7 +3780,7 @@ from cte</property>
                               cachedLength="50"
                               cachedName="country"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\SCD to check that tweet does not already exist.Inputs[Slowly Changing Dimension Input].ExternalColumns[country]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[country]">
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[country]">
                               <properties>
                                 <property
                                   dataType="System.Int32"
@@ -4327,7 +3795,7 @@ from cte</property>
                               cachedLength="50"
                               cachedName="county"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\SCD to check that tweet does not already exist.Inputs[Slowly Changing Dimension Input].ExternalColumns[county]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[county]">
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[county]">
                               <properties>
                                 <property
                                   dataType="System.Int32"
@@ -4340,7 +3808,7 @@ from cte</property>
                               cachedDataType="dbTimeStamp"
                               cachedName="created_datetime"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\SCD to check that tweet does not already exist.Inputs[Slowly Changing Dimension Input].ExternalColumns[created_datetime]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[created_datetime]">
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[created_datetime]">
                               <properties>
                                 <property
                                   dataType="System.Int32"
@@ -4368,7 +3836,7 @@ from cte</property>
                               cachedLength="1024"
                               cachedName="location"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\SCD to check that tweet does not already exist.Inputs[Slowly Changing Dimension Input].ExternalColumns[location]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[location]">
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[location]">
                               <properties>
                                 <property
                                   dataType="System.Int32"
@@ -4381,7 +3849,7 @@ from cte</property>
                               cachedDataType="i4"
                               cachedName="retweet"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\SCD to check that tweet does not already exist.Inputs[Slowly Changing Dimension Input].ExternalColumns[retweet]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[retweet]">
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[retweet]">
                               <properties>
                                 <property
                                   dataType="System.Int32"
@@ -4394,7 +3862,7 @@ from cte</property>
                               cachedDataType="i8"
                               cachedName="tweet_id"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\SCD to check that tweet does not already exist.Inputs[Slowly Changing Dimension Input].ExternalColumns[tweet_id]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_id]">
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_id]">
                               <properties>
                                 <property
                                   dataType="System.Int32"
@@ -4409,7 +3877,7 @@ from cte</property>
                               cachedLength="50"
                               cachedName="tweet_idstr"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\SCD to check that tweet does not already exist.Inputs[Slowly Changing Dimension Input].ExternalColumns[tweet_idstr]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_idstr]">
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_idstr]">
                               <properties>
                                 <property
                                   dataType="System.Int32"
@@ -4424,7 +3892,7 @@ from cte</property>
                               cachedLength="280"
                               cachedName="tweet_text"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\SCD to check that tweet does not already exist.Inputs[Slowly Changing Dimension Input].ExternalColumns[tweet_text]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_text]">
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_text]">
                               <properties>
                                 <property
                                   dataType="System.Int32"
@@ -4566,8 +4034,11 @@ tweet_idstr,
 tweet_text,
 CONVERT(DATETIME, SUBSTRING(createddatetime, 5, 6) + RIGHT(createddatetime, 5)  + SUBSTRING(createddatetime,11,9)) as created_datetime,
 case when isnull(is_retweet,-1) &gt;0 then 1 else 0 end retweet,
-[location]
-from [Stg].[twitter_feed]
+[location],
+l.county,l.country
+from [Stg].[twitter_feed] f with (nolock)
+left join [dbo].[dim_location] l with (nolock)
+on f.[location] like '%' + l.county + '%'
 where tweet_id &lt;&gt; 0
 ;</property>
                         <property
@@ -4665,6 +4136,28 @@ where tweet_id &lt;&gt; 0
                               lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[location]"
                               name="location"
                               truncationRowDisposition="FailComponent" />
+                            <outputColumn
+                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[county]"
+                              codePage="1252"
+                              dataType="str"
+                              errorOrTruncationOperation="Conversion"
+                              errorRowDisposition="FailComponent"
+                              externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].ExternalColumns[county]"
+                              length="50"
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[county]"
+                              name="county"
+                              truncationRowDisposition="FailComponent" />
+                            <outputColumn
+                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[country]"
+                              codePage="1252"
+                              dataType="str"
+                              errorOrTruncationOperation="Conversion"
+                              errorRowDisposition="FailComponent"
+                              externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].ExternalColumns[country]"
+                              length="50"
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[country]"
+                              name="country"
+                              truncationRowDisposition="FailComponent" />
                           </outputColumns>
                           <externalMetadataColumns
                             isUsed="True">
@@ -4698,6 +4191,18 @@ where tweet_id &lt;&gt; 0
                               dataType="str"
                               length="1024"
                               name="location" />
+                            <externalMetadataColumn
+                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].ExternalColumns[county]"
+                              codePage="1252"
+                              dataType="str"
+                              length="50"
+                              name="county" />
+                            <externalMetadataColumn
+                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].ExternalColumns[country]"
+                              codePage="1252"
+                              dataType="str"
+                              length="50"
+                              name="country" />
                           </externalMetadataColumns>
                         </output>
                         <output
@@ -4741,6 +4246,20 @@ where tweet_id &lt;&gt; 0
                               length="1024"
                               lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Error Output].Columns[location]"
                               name="location" />
+                            <outputColumn
+                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Error Output].Columns[county]"
+                              codePage="1252"
+                              dataType="str"
+                              length="50"
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Error Output].Columns[county]"
+                              name="county" />
+                            <outputColumn
+                              refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Error Output].Columns[country]"
+                              codePage="1252"
+                              dataType="str"
+                              length="50"
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Error Output].Columns[country]"
+                              name="country" />
                             <outputColumn
                               refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                               dataType="i4"
@@ -4835,7 +4354,7 @@ where tweet_id &lt;&gt; 0
                               cachedDataType="i8"
                               cachedName="tweet_id"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].ExternalColumns[tweet_id]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_id]" />
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_id]" />
                             <inputColumn
                               refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].Columns[tweet_idstr]"
                               cachedCodepage="1252"
@@ -4843,7 +4362,7 @@ where tweet_id &lt;&gt; 0
                               cachedLength="50"
                               cachedName="tweet_idstr"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].ExternalColumns[tweet_idstr]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_idstr]" />
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_idstr]" />
                             <inputColumn
                               refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].Columns[tweet_text]"
                               cachedCodepage="1252"
@@ -4851,19 +4370,19 @@ where tweet_id &lt;&gt; 0
                               cachedLength="280"
                               cachedName="tweet_text"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].ExternalColumns[tweet_text]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[tweet_text]" />
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[tweet_text]" />
                             <inputColumn
                               refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].Columns[created_datetime]"
                               cachedDataType="dbTimeStamp"
                               cachedName="created_datetime"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].ExternalColumns[created_datetime]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[created_datetime]" />
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[created_datetime]" />
                             <inputColumn
                               refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].Columns[retweet]"
                               cachedDataType="i4"
                               cachedName="retweet"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].ExternalColumns[retweet]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[retweet]" />
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[retweet]" />
                             <inputColumn
                               refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].Columns[location]"
                               cachedCodepage="1252"
@@ -4871,7 +4390,7 @@ where tweet_id &lt;&gt; 0
                               cachedLength="1024"
                               cachedName="location"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].ExternalColumns[location]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[location]" />
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[location]" />
                             <inputColumn
                               refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].Columns[county]"
                               cachedCodepage="1252"
@@ -4879,7 +4398,7 @@ where tweet_id &lt;&gt; 0
                               cachedLength="50"
                               cachedName="county"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].ExternalColumns[county]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[county]" />
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[county]" />
                             <inputColumn
                               refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].Columns[country]"
                               cachedCodepage="1252"
@@ -4887,7 +4406,7 @@ where tweet_id &lt;&gt; 0
                               cachedLength="50"
                               cachedName="country"
                               externalMetadataColumnId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].ExternalColumns[country]"
-                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output].Columns[country]" />
+                              lineageId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output].Columns[country]" />
                             <inputColumn
                               refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input].Columns[load_etl_batch_key]"
                               cachedDataType="i4"
@@ -4983,18 +4502,13 @@ where tweet_id &lt;&gt; 0
                       name="Derived Column Output"
                       startId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\add batch_key.Outputs[Derived Column Output]" />
                     <path
-                      refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table.Paths[Fuzzy Lookup Output]"
-                      endId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\add batch_key.Inputs[Derived Column Input]"
-                      name="Fuzzy Lookup Output"
-                      startId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Outputs[Fuzzy Lookup Output]" />
-                    <path
                       refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table.Paths[New Output]"
                       endId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table.Inputs[OLE DB Destination Input]"
                       name="New Output"
                       startId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\SCD to check that tweet does not already exist.Outputs[New Output]" />
                     <path
                       refId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table.Paths[OLE DB Source Output]"
-                      endId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup.Inputs[Fuzzy Lookup Input]"
+                      endId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\add batch_key.Inputs[Derived Column Input]"
                       name="OLE DB Source Output"
                       startId="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data.Outputs[OLE DB Source Output]" />
                   </paths>
@@ -10427,22 +9941,22 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arr
     design-time-name="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="147.2,41.6"
           Id="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\add batch_key"
-          TopLeft="81.5,208.7" />
+          TopLeft="86.3,103.9" />
         <NodeLayout
           Size="299.2,41.6"
           Id="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\SCD to check that tweet does not already exist"
-          TopLeft="5.50000000000003,310.3" />
+          TopLeft="10.3,205.5" />
         <NodeLayout
           Size="139.2,41.6"
           Id="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\staging_data"
-          TopLeft="85.5,5.49999999999995" />
+          TopLeft="87.1,6.29999999999996" />
         <EdgeLayout
           Id="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table.Paths[Derived Column Output]"
-          TopLeft="155.1,250.3">
+          TopLeft="159.9,145.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -10463,60 +9977,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arr
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="142.4,41.6"
-          Id="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup"
-          TopLeft="83.9,107.1" />
-        <EdgeLayout
-          Id="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table.Paths[OLE DB Source Output]"
-          TopLeft="155.1,47.1">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,59.9999999999999"
-              Start="0,0"
-              End="0,52.4999999999999">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.4999999999999" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table.Paths[Fuzzy Lookup Output]"
-          TopLeft="155.1,148.7">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,59.9999999999999"
-              Start="0,0"
-              End="0,52.4999999999999">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.4999999999999" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
           Size="159.2,41.6"
           Id="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\twitter feed table"
-          TopLeft="73.9000000000001,411.9" />
+          TopLeft="78.7,307.1" />
         <EdgeLayout
           Id="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table.Paths[New Output]"
-          TopLeft="154.3,351.9">
+          TopLeft="159.1,247.1">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -10536,6 +10002,28 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arr
             <mssgm:EdgeLabel
               BoundingBox="-27.09138671875,20.533203125,54.1827734375,11.43359375"
               RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table.Paths[OLE DB Source Output]"
+          TopLeft="158.3,47.9">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,55.9999999999998"
+              Start="0,0"
+              End="0,48.4999999999998">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.4999999999998" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -10685,9 +10173,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arr
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -10793,9 +10279,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arr
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -10829,9 +10313,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arr
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -10853,9 +10335,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arr
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -10877,9 +10357,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arr
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -11115,19 +10593,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arr
   &lt;DateVariable /&gt;
   &lt;EnableInferredSupport&gt;true&lt;/EnableInferredSupport&gt;
 &lt;/SCDWizardMetadata&gt;</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Twitter files\For each Twitter file\Load staging data to twitter feed table\Fuzzy Lookup">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">View</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
