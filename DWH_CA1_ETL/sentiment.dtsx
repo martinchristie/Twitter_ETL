@@ -1,0 +1,439 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/29/2018 9:34:13 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="WSDING248"
+  DTS:CreatorName="DING\Martin.Christie"
+  DTS:DTSID="{901BE461-A40A-4626-8FF6-83B360E86697}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.0800.90"
+  DTS:LocaleID="6153"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{1F76C95A-CF33-45F6-85AC-B0A7007765D7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HTTP Connection Manager]"
+      DTS:CreationName="HTTP (KingswaySoft)"
+      DTS:DTSID="{E4CB7D1C-634D-41C8-983C-D8A7B8421E8F}"
+      DTS:ObjectName="HTTP Connection Manager">
+      <DTS:ObjectData>
+        <ConnectionManager
+          ConnectionString="BaseUrl=https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment;AuthenticationMode=Credentials;PathToTokenFile=;AccessTokenRequestLocation=HttpHeader;Domain=;UserName=martinchristie;ProxyMode=NoProxy;ProxyUsername=;ProxyServer=;ProxyServerPort=0;ThrottleRate=0;ServiceTimeout=120;RetryOnIntermittentErrors=True;ChunkSize=0;CertificateLocation=Store;CertificateSubject=;IgnoreCertificateErrors=False;CustomHeaders='{&#xA;  &quot;Ocp-Apim-Subscription-Key&quot;: {&#xA;    &quot;value&quot;: &quot;d470b910d21649e48d66b7cebc667f71&quot;&#xA;  }&#xA;}'" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.NED]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{AAB0D810-939E-4947-9DB1-ECF824463919}"
+      DTS:ObjectName="LocalHost.NED">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=NED;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2B36775F-223F-47E1-827E-9A727F49C867}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="json_str">
+      <DTS:VariableValue
+        DTS:DataType="8">{   "documents": [     {       "language": "en",       "id": "1",       "text": "Hello world. This is some input text that I love."     },     {       "language": "fr",       "id": "2",       "text": "Bonjour tout le monde"     },     {       "language": "es",       "id": "3",       "text": "La carretera estaba atascada. Había mucho tráfico el día de ayer."     }   ] }</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{A7B38481-0DBA-4A35-9B14-40ABB0AD853B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\DataReaderDest"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Exposes data in a data flow to other applications by using the ADO.NET DataReader interface. For example, send data to a custom application, written in C#, that requires a DataReader interface.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Exposes data in a data flow to other applications by using the ADO.NET DataReader interface. For example, send data to a custom application, written in C#, that requires a DataReader interface."
+              name="DataReaderDest">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of milliseconds before the component times out."
+                  name="ReadTimeout">30000</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies an object that implements the IDataReader interface."
+                  name="DataReader" />
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the component fails when a read time-out occurs."
+                  name="FailOnTimeout">false</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderDestinationAdapter</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\DataReaderDest.Inputs[DataReader Destination Input]"
+                  hasSideEffects="true"
+                  name="DataReader Destination Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\JSON Source"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright (c) 2011-2018 KingswaySoft Inc."
+              description="Retrieves JSON documents and extracts them into columns."
+              name="JSON Source"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="A list of the output nodes in the Json design that are ignored."
+                  expressionType="Notify"
+                  name="IgnoredOutputs"></property>
+                <property
+                  dataType="System.String"
+                  description="The template of the expected incoming Json."
+                  expressionType="Notify"
+                  name="Design">{"jsonName":"$","dataName":"Root","type":"Object","children":[{"jsonName":"documents","dataName":"documents","type":"Array","children":[{"jsonName":"id","dataName":"id","type":"Value"},{"jsonName":"score","dataName":"score","type":"Value"}]}]}</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates how null values are represented in the incoming JSON."
+                  expressionType="Notify"
+                  name="NullMode"
+                  typeConverter="KingswaySoft.IntegrationToolkit.ProductivityPack.JsonExtractNullMode, KingswaySoft.IntegrationToolkit.ProductivityPack, Version=1.0.2017.0, Culture=neutral, PublicKeyToken=705df8e0751bcea7">0</property>
+                <property
+                  dataType="System.String"
+                  description="The relative path of the HTTP request that will be combined with the base path from the connection manager."
+                  expressionType="Notify"
+                  name="RelativePath"></property>
+                <property
+                  dataType="System.String"
+                  description="The body of the HTTP request."
+                  expressionType="Notify"
+                  name="RequestBody">{"IsExpression":false,"Value":"@[User::json_str]"}</property>
+                <property
+                  dataType="System.String"
+                  description="The headers that will be used in the request."
+                  expressionType="Notify"
+                  name="RequestHeaders">[]</property>
+                <property
+                  dataType="System.String"
+                  description="The query string parameters that will be used in the request."
+                  expressionType="Notify"
+                  name="RequestQueryStringParameters">[{"Key":"Ocp-Apim-Subscription-Key","Value":{"IsExpression":false,"Value":"d470b910d21649e48d66b7cebc667f71"}}]</property>
+                <property
+                  dataType="System.String"
+                  description="The expression that determines if requests should keep being sent."
+                  expressionType="Notify"
+                  name="RequestAgainRule"></property>
+                <property
+                  dataType="System.String"
+                  description="The HTTP Method to use when sending requests."
+                  expressionType="Notify"
+                  name="HttpMethod">POST</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the path to the Item to get the json document from."
+                  expressionType="Notify"
+                  name="LocalFilePath"></property>
+                <property
+                  dataType="System.String"
+                  description="The encoding that will be used to read the json document."
+                  expressionType="Notify"
+                  name="LocalFileEncoding">Unicode (UTF-8)</property>
+                <property
+                  dataType="System.Int32"
+                  description="The max number of identical requests that will be before an error is raised."
+                  expressionType="Notify"
+                  name="MaxIdenticalRequests">1</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">KingswaySoft.IntegrationToolkit.ProductivityPack.JsonSourceComponent</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\JSON Source.Connections[HTTP (KingswaySoft)]"
+                  connectionManagerID="Package.ConnectionManagers[HTTP Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[HTTP Connection Manager]"
+                  description="ProductivityPack"
+                  name="HTTP (KingswaySoft)" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\JSON Source.Outputs[Root]"
+                  name="Root">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.Int32"
+                      description="The id of the parent output of this output."
+                      name="ParentId">#{Package\Data Flow Task\-1:invalid}</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies if this is a collection of items (may only be false for the root item)."
+                      name="IsCollection">false</property>
+                    <property
+                      dataType="System.String"
+                      description="The JPath to this output in the Json document."
+                      name="JPath">$</property>
+                    <property
+                      containsID="true"
+                      dataType="System.Boolean"
+                      description="Specifies if the specified output represents an array of objects or an array of values."
+                      name="IsComplex">true</property>
+                    <property
+                      containsID="true"
+                      dataType="System.Int32"
+                      description="The id of the field that contains the fully formed JSON for the current level."
+                      expressionType="Notify"
+                      name="JsonField">#{Package\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_JSON]}</property>
+                    <property
+                      containsID="true"
+                      dataType="System.Int32"
+                      description="The id of the field that is an auto generated row index."
+                      name="RowIndexField">#{Package\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_RowIndex]}</property>
+                    <property
+                      containsID="true"
+                      dataType="System.Int32"
+                      description="The key field of this output. Used to show relationship of parent and child outputs."
+                      name="KeyField">#{Package\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_RowIndex]}</property>
+                    <property
+                      containsID="true"
+                      dataType="System.Int32"
+                      description="The key field of this outputs parent. Used to show relationship of parent and child outputs."
+                      name="ParentKeyField">#{Package\Data Flow Task\-1:invalid}</property>
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[Root].Columns[_JSON]"
+                      dataType="nText"
+                      externalMetadataColumnId="Package\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_JSON]"
+                      lineageId="Package\Data Flow Task\JSON Source.Outputs[Root].Columns[_JSON]"
+                      name="_JSON" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[Root].Columns[_RowIndex]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_RowIndex]"
+                      lineageId="Package\Data Flow Task\JSON Source.Outputs[Root].Columns[_RowIndex]"
+                      name="_RowIndex" />
+                  </outputColumns>
+                  <externalMetadataColumns>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_JSON]"
+                      dataType="nText"
+                      name="_JSON" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_RowIndex]"
+                      dataType="i4"
+                      name="_RowIndex" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\JSON Source.Outputs[documents]"
+                  name="documents">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.Int32"
+                      description="The id of the parent output of this output."
+                      name="ParentId">#{Package\Data Flow Task\JSON Source.Outputs[Root]}</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies if this is a collection of items (may only be false for the root item)."
+                      name="IsCollection">true</property>
+                    <property
+                      dataType="System.String"
+                      description="The JPath to this output in the Json document."
+                      name="JPath">$['documents']</property>
+                    <property
+                      containsID="true"
+                      dataType="System.Boolean"
+                      description="Specifies if the specified output represents an array of objects or an array of values."
+                      name="IsComplex">true</property>
+                    <property
+                      containsID="true"
+                      dataType="System.Int32"
+                      description="The id of the field that contains the fully formed JSON for the current level."
+                      expressionType="Notify"
+                      name="JsonField">#{Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_JSON]}</property>
+                    <property
+                      containsID="true"
+                      dataType="System.Int32"
+                      description="The id of the field that is an auto generated row index."
+                      name="RowIndexField">#{Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_RowIndex]}</property>
+                    <property
+                      containsID="true"
+                      dataType="System.Int32"
+                      description="The key field of this output. Used to show relationship of parent and child outputs."
+                      name="KeyField">#{Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_RowIndex]}</property>
+                    <property
+                      containsID="true"
+                      dataType="System.Int32"
+                      description="The key field of this outputs parent. Used to show relationship of parent and child outputs."
+                      name="ParentKeyField">#{Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_ParentKeyField]}</property>
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[documents].Columns[_JSON]"
+                      dataType="nText"
+                      externalMetadataColumnId="Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_JSON]"
+                      lineageId="Package\Data Flow Task\JSON Source.Outputs[documents].Columns[_JSON]"
+                      name="_JSON" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[documents].Columns[_RowIndex]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_RowIndex]"
+                      lineageId="Package\Data Flow Task\JSON Source.Outputs[documents].Columns[_RowIndex]"
+                      name="_RowIndex" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[documents].Columns[_ParentKeyField]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_ParentKeyField]"
+                      lineageId="Package\Data Flow Task\JSON Source.Outputs[documents].Columns[_ParentKeyField]"
+                      name="_ParentKeyField" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[documents].Columns[id]"
+                      dataType="wstr"
+                      externalMetadataColumnId="Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[id]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\JSON Source.Outputs[documents].Columns[id]"
+                      name="id" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[documents].Columns[score]"
+                      dataType="r8"
+                      externalMetadataColumnId="Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[score]"
+                      lineageId="Package\Data Flow Task\JSON Source.Outputs[documents].Columns[score]"
+                      name="score" />
+                  </outputColumns>
+                  <externalMetadataColumns>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_JSON]"
+                      dataType="nText"
+                      name="_JSON" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_RowIndex]"
+                      dataType="i4"
+                      name="_RowIndex" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_ParentKeyField]"
+                      dataType="i4"
+                      name="_ParentKeyField" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[id]"
+                      dataType="wstr"
+                      length="100"
+                      name="id">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="The id of the parent output of this output."
+                          name="JPath">$['documents'][n]['id']</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[score]"
+                      dataType="r8"
+                      name="score">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="The id of the parent output of this output."
+                          name="JPath">$['documents'][n]['score']</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[documents]"
+              endId="Package\Data Flow Task\DataReaderDest.Inputs[DataReader Destination Input]"
+              name="documents"
+              startId="Package\Data Flow Task\JSON Source.Outputs[documents]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Data Flow Task"
+          TopLeft="522,98" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Data Flow Task\JSON Source"
+          TopLeft="624,140" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Data Flow Task\DataReaderDest"
+          TopLeft="620,301" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[documents]"
+          TopLeft="695.5,182">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,119"
+              Start="0,0"
+              End="0,111.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,111.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-33.50123046875,47.75,67.0024609375,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

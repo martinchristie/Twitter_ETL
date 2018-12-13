@@ -1,0 +1,873 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/29/2018 9:34:13 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="WSDING248"
+  DTS:CreatorName="DING\Martin.Christie"
+  DTS:DTSID="{6BED42B5-5A49-424B-BD89-91229406916E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.30"
+  DTS:LocaleID="6153"
+  DTS:ObjectName="Get_Sentiment_Scores"
+  DTS:PackageType="5"
+  DTS:VersionBuild="40"
+  DTS:VersionGUID="{BFA65ADE-D9F1-488F-80FA-144E58E3B56C}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HTTP Connection Manager]"
+      DTS:CreationName="HTTP (KingswaySoft)"
+      DTS:DTSID="{EF03BF2A-7F3B-42AC-8090-5636EEA80F16}"
+      DTS:ObjectName="HTTP Connection Manager">
+      <DTS:ObjectData>
+        <ConnectionManager
+          ConnectionString="BaseUrl=https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment;AuthenticationMode=Credentials;PathToTokenFile=;AccessTokenRequestLocation=HttpHeader;Domain=;UserName=martinchristie;ProxyMode=NoProxy;ProxyUsername=;ProxyServer=;ProxyServerPort=0;ThrottleRate=0;ServiceTimeout=120;RetryOnIntermittentErrors=True;ChunkSize=0;CertificateLocation=Store;PathToCertificate=;IgnoreCertificateErrors=False;CustomHeaders='{&#xA;  &quot;Ocp-Apim-Subscription-Key&quot;: {&#xA;    &quot;value&quot;: &quot;d470b910d21649e48d66b7cebc667f71&quot;&#xA;  }&#xA;}';HttpMethod=POST" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{383E0C51-F014-42A9-8E15-5456B6E78DAE}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="json_object">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3FF6A520-419E-49F9-9CAE-1AC108160EFA}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="json_str">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{56E39DDB-BB5F-4AFD-9147-2F39541E1BB9}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="loop_counter">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{71C21118-9E6B-4068-95ED-69774B0F2514}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="tweet_key">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9C8438DE-A724-4A0C-BAC0-851EB4362F71}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="tweet_recordset">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8EF6899F-D6CF-499C-92CA-7545FF3DB06A}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="tweet_score">
+      <DTS:VariableValue
+        DTS:DataType="14">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\For each tweet key get sentiment"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{F88DA96F-57E1-4A57-A2C4-E0F5EA2B4A3F}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="For each tweet key get sentiment">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachADOEnumerator"
+        DTS:DTSID="{FA6015D3-94EF-409F-84D6-FD967DF5831D}"
+        DTS:ObjectName="{FA6015D3-94EF-409F-84D6-FD967DF5831D}">
+        <DTS:ObjectData>
+          <FEEADO
+            EnumType="EnumerateRowsInFirstTable"
+            VarName="User::tweet_recordset" />
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\For each tweet key get sentiment\foreach json object"
+          DTS:CreationName="STOCK:FOREACHLOOP"
+          DTS:Description="Foreach Loop Container"
+          DTS:DTSID="{17140BD1-669C-4398-858E-1D0E4185E0D7}"
+          DTS:ExecutableType="STOCK:FOREACHLOOP"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="foreach json object">
+          <DTS:ForEachEnumerator
+            DTS:CreationName="Microsoft.ForEachADOEnumerator"
+            DTS:DTSID="{4934C856-EDFE-4310-B821-05EDBBDD240A}"
+            DTS:ObjectName="{4934C856-EDFE-4310-B821-05EDBBDD240A}">
+            <DTS:ObjectData>
+              <FEEADO
+                EnumType="EnumerateRowsInFirstTable"
+                VarName="User::json_object" />
+            </DTS:ObjectData>
+          </DTS:ForEachEnumerator>
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task"
+              DTS:CreationName="Microsoft.Pipeline"
+              DTS:Description="Data Flow Task"
+              DTS:DTSID="{9D5D1E27-E695-4FD6-82EA-38EB14CB190F}"
+              DTS:ExecutableType="Microsoft.Pipeline"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Data Flow Task"
+              DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <pipeline
+                  version="1">
+                  <components>
+                    <component
+                      refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key"
+                      componentClassID="Microsoft.DerivedColumn"
+                      contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                      description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                      name="add tweet key"
+                      usesDispositions="true">
+                      <inputs>
+                        <input
+                          refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Inputs[Derived Column Input]"
+                          description="Input to the Derived Column Transformation"
+                          name="Derived Column Input">
+                          <externalMetadataColumns />
+                        </input>
+                      </inputs>
+                      <outputs>
+                        <output
+                          refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Outputs[Derived Column Output]"
+                          description="Default Output of the Derived Column Transformation"
+                          exclusionGroup="1"
+                          name="Derived Column Output"
+                          synchronousInputId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Inputs[Derived Column Input]">
+                          <outputColumns>
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Outputs[Derived Column Output].Columns[tweet_key]"
+                              dataType="i4"
+                              errorOrTruncationOperation="Computation"
+                              errorRowDisposition="FailComponent"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Outputs[Derived Column Output].Columns[tweet_key]"
+                              name="tweet_key"
+                              truncationRowDisposition="FailComponent">
+                              <properties>
+                                <property
+                                  containsID="true"
+                                  dataType="System.String"
+                                  description="Derived Column Expression"
+                                  name="Expression">@[User::tweet_key]</property>
+                                <property
+                                  containsID="true"
+                                  dataType="System.String"
+                                  description="Derived Column Friendly Expression"
+                                  expressionType="Notify"
+                                  name="FriendlyExpression">@[User::tweet_key]</property>
+                              </properties>
+                            </outputColumn>
+                          </outputColumns>
+                          <externalMetadataColumns />
+                        </output>
+                        <output
+                          refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Outputs[Derived Column Error Output]"
+                          description="Error Output of the Derived Column Transformation"
+                          exclusionGroup="1"
+                          isErrorOut="true"
+                          name="Derived Column Error Output"
+                          synchronousInputId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Inputs[Derived Column Input]">
+                          <outputColumns>
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                              dataType="i4"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                              name="ErrorCode"
+                              specialFlags="1" />
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                              dataType="i4"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                              name="ErrorColumn"
+                              specialFlags="2" />
+                          </outputColumns>
+                          <externalMetadataColumns />
+                        </output>
+                      </outputs>
+                    </component>
+                    <component
+                      refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source"
+                      componentClassID="Microsoft.ManagedComponentHost"
+                      contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright (c) 2011-2018 KingswaySoft Inc."
+                      description="Retrieves JSON documents and extracts them into columns."
+                      name="JSON Source"
+                      usesDispositions="true"
+                      version="2">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="A list of the output nodes in the Json design that are ignored."
+                          expressionType="Notify"
+                          name="IgnoredOutputs"></property>
+                        <property
+                          dataType="System.String"
+                          description="The template of the expected incoming Json."
+                          expressionType="Notify"
+                          name="Design">{"jsonName":"$","dataName":"Root","type":"Object","children":[{"jsonName":"documents","dataName":"documents","type":"Array","children":[{"jsonName":"id","dataName":"id","type":"Value"},{"jsonName":"score","dataName":"score","type":"Value"}]}]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates how null values are represented in the incoming JSON."
+                          expressionType="Notify"
+                          name="NullMode"
+                          typeConverter="KingswaySoft.IntegrationToolkit.ProductivityPack.JsonExtractNullMode, KingswaySoft.IntegrationToolkit.ProductivityPack, Version=1.0.2017.0, Culture=neutral, PublicKeyToken=705df8e0751bcea7">0</property>
+                        <property
+                          dataType="System.String"
+                          description="The relative path of the HTTP request that will be combined with the base path from the connection manager."
+                          expressionType="Notify"
+                          name="RelativePath"></property>
+                        <property
+                          dataType="System.String"
+                          description="The body of the HTTP request."
+                          expressionType="Notify"
+                          name="RequestBody">{"IsExpression":false,"Value":"@[User::json_str]"}</property>
+                        <property
+                          dataType="System.String"
+                          description="The headers that will be used in the request."
+                          expressionType="Notify"
+                          name="RequestHeaders">[]</property>
+                        <property
+                          dataType="System.String"
+                          description="The query string parameters that will be used in the request."
+                          expressionType="Notify"
+                          name="RequestQueryStringParameters">[{"Key":"Ocp-Apim-Subscription-Key","Value":{"IsExpression":false,"Value":"d470b910d21649e48d66b7cebc667f71"}}]</property>
+                        <property
+                          dataType="System.String"
+                          description="The expression that determines if requests should keep being sent."
+                          expressionType="Notify"
+                          name="RequestAgainRule"></property>
+                        <property
+                          dataType="System.String"
+                          description="The HTTP Method to use when sending requests."
+                          expressionType="Notify"
+                          name="HttpMethod">POST</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the path to the Item to get the json document from."
+                          expressionType="Notify"
+                          name="LocalFilePath"></property>
+                        <property
+                          dataType="System.String"
+                          description="The encoding that will be used to read the json document."
+                          expressionType="Notify"
+                          name="LocalFileEncoding">Unicode (UTF-8)</property>
+                        <property
+                          dataType="System.Int32"
+                          description="The max number of identical requests that will be before an error is raised."
+                          expressionType="Notify"
+                          name="MaxIdenticalRequests">1</property>
+                        <property
+                          dataType="System.String"
+                          name="UserComponentTypeName">KingswaySoft.IntegrationToolkit.ProductivityPack.JsonSourceComponent</property>
+                      </properties>
+                      <connections>
+                        <connection
+                          refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Connections[HTTP (KingswaySoft)]"
+                          connectionManagerID="Package.ConnectionManagers[HTTP Connection Manager]"
+                          connectionManagerRefId="Package.ConnectionManagers[HTTP Connection Manager]"
+                          description="ProductivityPack"
+                          name="HTTP (KingswaySoft)" />
+                      </connections>
+                      <outputs>
+                        <output
+                          refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root]"
+                          name="Root">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="The id of the parent output of this output."
+                              name="ParentId">#{Package\For each tweet key get sentiment\foreach json object\Data Flow Task\-1:invalid}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Specifies if this is a collection of items (may only be false for the root item)."
+                              name="IsCollection">false</property>
+                            <property
+                              dataType="System.String"
+                              description="The JPath to this output in the Json document."
+                              name="JPath">$</property>
+                            <property
+                              containsID="true"
+                              dataType="System.Boolean"
+                              description="Specifies if the specified output represents an array of objects or an array of values."
+                              name="IsComplex">true</property>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="The id of the field that contains the fully formed JSON for the current level."
+                              expressionType="Notify"
+                              name="JsonField">#{Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_JSON]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="The id of the field that is an auto generated row index."
+                              name="RowIndexField">#{Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_RowIndex]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="The key field of this output. Used to show relationship of parent and child outputs."
+                              name="KeyField">#{Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_RowIndex]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="The key field of this outputs parent. Used to show relationship of parent and child outputs."
+                              name="ParentKeyField">#{Package\For each tweet key get sentiment\foreach json object\Data Flow Task\-1:invalid}</property>
+                          </properties>
+                          <outputColumns>
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root].Columns[_JSON]"
+                              dataType="nText"
+                              externalMetadataColumnId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_JSON]"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root].Columns[_JSON]"
+                              name="_JSON" />
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root].Columns[_RowIndex]"
+                              dataType="i4"
+                              externalMetadataColumnId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_RowIndex]"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root].Columns[_RowIndex]"
+                              name="_RowIndex" />
+                          </outputColumns>
+                          <externalMetadataColumns>
+                            <externalMetadataColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_JSON]"
+                              dataType="nText"
+                              name="_JSON" />
+                            <externalMetadataColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root].ExternalColumns[_RowIndex]"
+                              dataType="i4"
+                              name="_RowIndex" />
+                          </externalMetadataColumns>
+                        </output>
+                        <output
+                          refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents]"
+                          name="documents">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="The id of the parent output of this output."
+                              name="ParentId">#{Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[Root]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Specifies if this is a collection of items (may only be false for the root item)."
+                              name="IsCollection">true</property>
+                            <property
+                              dataType="System.String"
+                              description="The JPath to this output in the Json document."
+                              name="JPath">$['documents']</property>
+                            <property
+                              containsID="true"
+                              dataType="System.Boolean"
+                              description="Specifies if the specified output represents an array of objects or an array of values."
+                              name="IsComplex">true</property>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="The id of the field that contains the fully formed JSON for the current level."
+                              expressionType="Notify"
+                              name="JsonField">#{Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_JSON]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="The id of the field that is an auto generated row index."
+                              name="RowIndexField">#{Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_RowIndex]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="The key field of this output. Used to show relationship of parent and child outputs."
+                              name="KeyField">#{Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_RowIndex]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="The key field of this outputs parent. Used to show relationship of parent and child outputs."
+                              name="ParentKeyField">#{Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_ParentKeyField]}</property>
+                          </properties>
+                          <outputColumns>
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].Columns[_JSON]"
+                              dataType="nText"
+                              externalMetadataColumnId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_JSON]"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].Columns[_JSON]"
+                              name="_JSON" />
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].Columns[_RowIndex]"
+                              dataType="i4"
+                              externalMetadataColumnId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_RowIndex]"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].Columns[_RowIndex]"
+                              name="_RowIndex" />
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].Columns[_ParentKeyField]"
+                              dataType="i4"
+                              externalMetadataColumnId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_ParentKeyField]"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].Columns[_ParentKeyField]"
+                              name="_ParentKeyField" />
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].Columns[id]"
+                              dataType="wstr"
+                              externalMetadataColumnId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[id]"
+                              length="100"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].Columns[id]"
+                              name="id" />
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].Columns[score]"
+                              dataType="r8"
+                              externalMetadataColumnId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[score]"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].Columns[score]"
+                              name="score" />
+                          </outputColumns>
+                          <externalMetadataColumns>
+                            <externalMetadataColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_JSON]"
+                              dataType="nText"
+                              name="_JSON" />
+                            <externalMetadataColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_RowIndex]"
+                              dataType="i4"
+                              name="_RowIndex" />
+                            <externalMetadataColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[_ParentKeyField]"
+                              dataType="i4"
+                              name="_ParentKeyField" />
+                            <externalMetadataColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[id]"
+                              dataType="wstr"
+                              length="100"
+                              name="id">
+                              <properties>
+                                <property
+                                  dataType="System.String"
+                                  description="The id of the parent output of this output."
+                                  name="JPath">$['documents'][n]['id']</property>
+                              </properties>
+                            </externalMetadataColumn>
+                            <externalMetadataColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].ExternalColumns[score]"
+                              dataType="r8"
+                              name="score">
+                              <properties>
+                                <property
+                                  dataType="System.String"
+                                  description="The id of the parent output of this output."
+                                  name="JPath">$['documents'][n]['score']</property>
+                              </properties>
+                            </externalMetadataColumn>
+                          </externalMetadataColumns>
+                        </output>
+                      </outputs>
+                    </component>
+                    <component
+                      refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment"
+                      componentClassID="Microsoft.OLEDBCommand"
+                      contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+                      description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+                      name="update record sentiment"
+                      usesDispositions="true"
+                      version="2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                          name="CommandTimeout">0</property>
+                        <property
+                          dataType="System.String"
+                          description="The SQL command to be executed."
+                          expressionType="Notify"
+                          name="SqlCommand"
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">update [twitter].[twitter_feed] set [sentiment_score] = ? where [tweet_key] = ?</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the column code page to use when code page information is unavailable from the data source."
+                          name="DefaultCodePage">1252</property>
+                      </properties>
+                      <connections>
+                        <connection
+                          refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Connections[OleDbConnection]"
+                          connectionManagerID="{50CD106A-83C4-4CC6-A7DF-CEB6E8C94877}:external"
+                          connectionManagerRefId="Project.ConnectionManagers[DWH_CA1]"
+                          description="The OLE DB runtime connection used to access the database."
+                          name="OleDbConnection" />
+                      </connections>
+                      <inputs>
+                        <input
+                          refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Inputs[OLE DB Command Input]"
+                          errorOrTruncationOperation="Command Execution"
+                          errorRowDisposition="FailComponent"
+                          hasSideEffects="true"
+                          name="OLE DB Command Input">
+                          <inputColumns>
+                            <inputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Inputs[OLE DB Command Input].Columns[tweet_key]"
+                              cachedDataType="i4"
+                              cachedName="tweet_key"
+                              externalMetadataColumnId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Outputs[Derived Column Output].Columns[tweet_key]" />
+                            <inputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Inputs[OLE DB Command Input].Columns[score]"
+                              cachedDataType="r8"
+                              cachedName="score"
+                              externalMetadataColumnId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents].Columns[score]" />
+                          </inputColumns>
+                          <externalMetadataColumns
+                            isUsed="True">
+                            <externalMetadataColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                              dataType="r8"
+                              name="Param_0">
+                              <properties>
+                                <property
+                                  dataType="System.Int32"
+                                  description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                                  name="DBParamInfoFlags">81</property>
+                              </properties>
+                            </externalMetadataColumn>
+                            <externalMetadataColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                              dataType="i4"
+                              name="Param_1">
+                              <properties>
+                                <property
+                                  dataType="System.Int32"
+                                  description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                                  name="DBParamInfoFlags">81</property>
+                              </properties>
+                            </externalMetadataColumn>
+                          </externalMetadataColumns>
+                        </input>
+                      </inputs>
+                      <outputs>
+                        <output
+                          refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Outputs[OLE DB Command Output]"
+                          exclusionGroup="1"
+                          name="OLE DB Command Output"
+                          synchronousInputId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Inputs[OLE DB Command Input]">
+                          <externalMetadataColumns />
+                        </output>
+                        <output
+                          refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Outputs[OLE DB Command Error Output]"
+                          exclusionGroup="1"
+                          isErrorOut="true"
+                          name="OLE DB Command Error Output"
+                          synchronousInputId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Inputs[OLE DB Command Input]">
+                          <outputColumns>
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                              dataType="i4"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                              name="ErrorCode"
+                              specialFlags="1" />
+                            <outputColumn
+                              refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                              dataType="i4"
+                              lineageId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                              name="ErrorColumn"
+                              specialFlags="2" />
+                          </outputColumns>
+                          <externalMetadataColumns />
+                        </output>
+                      </outputs>
+                    </component>
+                  </components>
+                  <paths>
+                    <path
+                      refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task.Paths[Derived Column Output]"
+                      endId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment.Inputs[OLE DB Command Input]"
+                      name="Derived Column Output"
+                      startId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Outputs[Derived Column Output]" />
+                    <path
+                      refId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task.Paths[documents]"
+                      endId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key.Inputs[Derived Column Input]"
+                      name="documents"
+                      startId="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source.Outputs[documents]" />
+                  </paths>
+                </pipeline>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:ForEachVariableMappings>
+            <DTS:ForEachVariableMapping
+              DTS:CreationName=""
+              DTS:DTSID="{9C68EE24-40DF-4402-94E9-BACA15995D8D}"
+              DTS:ObjectName="{9C68EE24-40DF-4402-94E9-BACA15995D8D}"
+              DTS:ValueIndex="0"
+              DTS:VariableName="User::json_str" />
+          </DTS:ForEachVariableMappings>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\For each tweet key get sentiment\get tweet text"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{80389288-8011-4772-A5B2-F8E0F9A669F4}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="get tweet text"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{50CD106A-83C4-4CC6-A7DF-CEB6E8C94877}"
+              SQLTask:SqlStatementSource="select&#xA;    'en' as language,&#xA;     t.id as id,&#xA;     t.tweet as [text]&#xA;from&#xA;(&#xA;&#x9;select  tweet_key id, tweet_text tweet from [twitter].[twitter_feed] &#xA;&#x9;where county is not null and [sentiment_score] is null&#xA;&#x9;and tweet_key =  ?&#xA;)  t&#xA;for JSON PATH, ROOT('documents')"
+              SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="0"
+                SQLTask:DtsVariableName="User::json_object" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::tweet_key"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\For each tweet key get sentiment.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{77D3AD14-EAD1-4334-9CA6-A2E48C8B4D8A}"
+          DTS:From="Package\For each tweet key get sentiment\get tweet text"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\For each tweet key get sentiment\foreach json object" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{6F27257F-85A1-4A0A-AFC2-6BEA403476B2}"
+          DTS:ObjectName="{6F27257F-85A1-4A0A-AFC2-6BEA403476B2}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::tweet_key" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get tweets keys to be updated with senitment"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5E8546DD-5319-42EA-8DA6-ACBA909BAAB0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get tweets keys to be updated with senitment"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{50CD106A-83C4-4CC6-A7DF-CEB6E8C94877}"
+          SQLTask:SqlStatementSource="select  top 10000&#x9; tweet_key from [twitter].[twitter_feed] &#xA;with (nolock)&#xA;where county is not null and [sentiment_score] is null&#xA;and tweet_key = 13"
+          SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::tweet_recordset" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{2427045E-07D3-4594-A53A-AB93F37F9C1B}"
+      DTS:From="Package\Get tweets keys to be updated with senitment"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\For each tweet key get sentiment" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\For each tweet key get sentiment\foreach json object\Data Flow Task"
+          TopLeft="29.0129834539594,40.6224638342822" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="204.8,137.6"
+          Size="204.8,180.8"
+          Id="Package\For each tweet key get sentiment\foreach json object"
+          TopLeft="51.2311737499344,86.9005381210677" />
+        <NodeLayout
+          Size="144.8,41.6"
+          Id="Package\For each tweet key get sentiment\get tweet text"
+          TopLeft="80.6545507926446,9.54866563653607" />
+        <EdgeLayout
+          Id="Package\For each tweet key get sentiment.PrecedenceConstraints[Constraint]"
+          TopLeft="153.34286227129,51.1486656365361">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.7518724845316"
+              Start="0,0"
+              End="0,28.2518724845316">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.2518724845316" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="290.4,322.4"
+          Size="290.4,365.6"
+          Id="Package\For each tweet key get sentiment"
+          TopLeft="237.246757287041,109.420321705792" />
+        <NodeLayout
+          Size="296,41.6"
+          Id="Package\Get tweets keys to be updated with senitment"
+          TopLeft="232.155848109435,40.5989310506681" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="381.301302698238,82.1989310506681">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.221390655124"
+              Start="0,0"
+              End="0,19.721390655124">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.721390655124" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\For each tweet key get sentiment\foreach json object\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="193.6,41.6"
+          Id="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\update record sentiment"
+          TopLeft="334.857148559726,215.2" />
+        <NodeLayout
+          Size="139.2,41.6"
+          Id="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\JSON Source"
+          TopLeft="369.714281383826,46.3999986872954" />
+        <NodeLayout
+          Size="144.8,41.6"
+          Id="Package\For each tweet key get sentiment\foreach json object\Data Flow Task\add tweet key"
+          TopLeft="364.000006198883,129.552942163144" />
+        <EdgeLayout
+          Id="Package\For each tweet key get sentiment\foreach json object\Data Flow Task.Paths[Derived Column Output]"
+          TopLeft="434.028577379305,171.152942163144">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.047057836856"
+              Start="0,0"
+              End="0,36.547057836856">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.547057836856" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,10.273528918428,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\For each tweet key get sentiment\foreach json object\Data Flow Task.Paths[documents]"
+          TopLeft="437.857143791355,87.9999986872954">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.5529434758487"
+              Start="0,0"
+              End="0,34.0529434758487">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.0529434758487" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-33.50123046875,9.02647173792435,67.0024609375,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
